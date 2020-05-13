@@ -1,3 +1,8 @@
+KMNavigationBarTransition作者已停更，新增功能：
+1、push&pop刷新navigationBar.layer的shadowOffset、shadowColor、shadowRadius、masksToBounds、shadowOpacity属性；
+2、push&pop刷新titleTextAttributes属性；
+
+
 KMNavigationBarTransition [中文介绍](https://github.com/MoZhouqi/KMNavigationBarTransition/blob/master/README_CN.md)
 ============
 
