@@ -71,12 +71,10 @@
     [self km_restoreScrollViewContentInsetAdjustmentBehaviorIfNeeded];
     UIViewController *transitionViewController = self.navigationController.km_transitionContextToViewController;
     if (self.km_transitionNavigationBar) {
-        self.navigationController.navigationBar.barTintColor = self.km_transitionNavigationBar.barTintColor;
-        [self.navigationController.navigationBar setBackgroundImage:[self.km_transitionNavigationBar backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
-        [self.navigationController.navigationBar setShadowImage:self.km_transitionNavigationBar.shadowImage];
+        [self.navigationController yoc_resetNavigationBarWithAppearingNavigationBar:self.km_transitionNavigationBar];
         if (!transitionViewController || [transitionViewController isEqual:self]) {
             [self.km_transitionNavigationBar removeFromSuperview];
-            self.km_transitionNavigationBar = nil; 
+            self.km_transitionNavigationBar = nil;
         }
     }
     if ([transitionViewController isEqual:self]) {
@@ -135,6 +133,16 @@
     bar.barTintColor = self.navigationController.navigationBar.barTintColor;
     [bar setBackgroundImage:[self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
     bar.shadowImage = self.navigationController.navigationBar.shadowImage;
+    
+    bar.layer.shadowOffset = self.navigationController.navigationBar.layer.shadowOffset;
+    bar.layer.shadowColor = self.navigationController.navigationBar.layer.shadowColor;
+    bar.layer.shadowRadius = self.navigationController.navigationBar.layer.shadowRadius;
+    bar.layer.masksToBounds = self.navigationController.navigationBar.layer.masksToBounds;
+    bar.layer.shadowOpacity = self.navigationController.navigationBar.layer.shadowOpacity;
+    
+    [bar setTitleTextAttributes:self.navigationController.navigationBar.titleTextAttributes];
+    bar.tintColor = self.navigationController.navigationBar.tintColor;
+
     [self.km_transitionNavigationBar removeFromSuperview];
     self.km_transitionNavigationBar = bar;
     [self km_resizeTransitionNavigationBarFrame];

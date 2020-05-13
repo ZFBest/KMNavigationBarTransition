@@ -17,6 +17,7 @@ struct NavigationBarData {
     var backgroundImageColor = NavigationBarData.BackgroundImageColorArray.first!
     var prefersHidden = false
     var prefersShadowImageHidden = false
+    var prefersLayerShadowHidden = false
 
 }
 

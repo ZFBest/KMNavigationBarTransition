@@ -42,6 +42,14 @@ class MainViewController: UITableViewController {
         nextNavigatioBarBackgroundImageColorText.text = nextNavigationBarData.backgroundImageColor.rawValue
         nextNavigationBarPrefersHiddenSwitch.isOn = nextNavigationBarData.prefersHidden
         nextNavigationBarPrefersShadowImageHiddenSwitch.isOn = nextNavigationBarData.prefersShadowImageHidden
+
+        ///导航栏底部阴影
+        navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 2);
+        navigationController?.navigationBar.layer.shadowColor = nextNavigationBarData.prefersLayerShadowHidden ? UIColor.clear.cgColor : UIColor.red.cgColor;
+        navigationController?.navigationBar.layer.shadowRadius = 20.0;
+        navigationController?.navigationBar.layer.masksToBounds = false;
+        navigationController?.navigationBar.layer.shadowOpacity = 0.4;
+
         
         navigationController?.navigationBar.barTintColor = currentNavigationBarData.barTintColor.toUIColor
         navigationController?.navigationBar.setBackgroundImage(currentNavigationBarData.backgroundImageColor.toUIImage, for: .default)
@@ -63,6 +71,11 @@ extension MainViewController {
     
     @IBAction func nextNavigationBarPrefersShadowImageHidden(_ sender: UISwitch) {
         nextNavigationBarData.prefersShadowImageHidden = sender.isOn
+    }
+    
+    ///导航栏底部阴影
+    @IBAction func nextNavigationBarPrefersLayerShadowHidden(_ sender: UISwitch) {
+        nextNavigationBarData.prefersLayerShadowHidden = sender.isOn
     }
     
     @IBAction func nextNavigationBarPrefersHidden(_ sender: UISwitch) {
@@ -122,14 +135,14 @@ extension MainViewController {
                 switch (selectedIndexPath.section, selectedIndexPath.row) {
                 case (0, 0):
                     colorsArray = NavigationBarData.BarTintColorArray
-                    selectedIndex = colorsArray.index(of: NavigationBarBackgroundViewColor(rawValue: nextNavigationBarTintColorText.text!)!)
+                    selectedIndex = colorsArray.firstIndex(of: NavigationBarBackgroundViewColor(rawValue: nextNavigationBarTintColorText.text!)!)
                     block = {
                         self.nextNavigationBarData.barTintColor = $0
                         self.nextNavigationBarTintColorText.text = $0.rawValue
                     }
                 case (0, 1):
                     colorsArray = NavigationBarData.BackgroundImageColorArray
-                    selectedIndex = colorsArray.index(of: NavigationBarBackgroundViewColor(rawValue: nextNavigatioBarBackgroundImageColorText.text!)!)
+                    selectedIndex = colorsArray.firstIndex(of: NavigationBarBackgroundViewColor(rawValue: nextNavigatioBarBackgroundImageColorText.text!)!)
                     block = {
                         self.nextNavigationBarData.backgroundImageColor = $0
                         self.nextNavigatioBarBackgroundImageColorText.text = $0.rawValue
@@ -146,6 +159,7 @@ extension MainViewController {
                     return
                 }
                 viewController.currentNavigationBarData = nextNavigationBarData
+                
                 break
             default:
                 break
